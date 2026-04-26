@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="lawn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakecity Lawns & Snow | Sault Ste. Marie Property Maintenance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* 🌿 GRASS MODE */
+    --accent: #3FAF5A;
+    --accent-light: #A5D6A7;
+    --accent-dark: #2E7D32;
+    --accent-secondary: #2F9FA5;
+    --accent-bg: #E8F5E9;
+    --page-bg: #F4FBF6;
+    --surface: #FFFFFF;
+    --text: #1A2B2D;
+    --service-img: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80');
+    --mode-label: '🌿 Lawn Care';
+    --cta-gradient: linear-gradient(135deg, #3FAF5A, #2E7D32);
+    --card-shadow: 0 8px 32px rgba(63, 175, 90, 0.08);
+    --card-shadow-hover: 0 12px 40px rgba(63, 175, 90, 0.15);
+    --transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-mode="snow"] {
+    /* ❄️ SNOW MODE */
+    --accent: #2F9FA5;
+    --accent-light: #A7D8DE;
+    --accent-dark: #1F7F85;
+    --accent-secondary: #4FB3BF;
+    --accent-bg: #DFF3F5;
+    --page-bg: #F2FAFB;
+    --surface: #FFFFFF;
+    --text: #1A2B2D;
+    --service-img: url('https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=800&q=80');
+    --cta-gradient: linear-gradient(135deg, #2F9FA5, #1F7F85);
+    --card-shadow: 0 8px 32px rgba(47, 159, 165, 0.1);
+    --card-shadow-hover: 0 12px 40px rgba(47, 159, 165, 0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--page-bg);
+    overflow-x: hidden;
+    transition: background var(--transition);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 0 5%;
+    height: 76px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+
+  .nav-logo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+  .nav-logo span { color: var(--accent); transition: color var(--transition); }
+
+  .nav-center { display: flex; gap: 32px; align-items: center; }
+  .nav-center a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-center a:hover { color: var(--accent); }
+  .nav-center a.active { color: var(--accent); font-weight: 600; }
+
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-ig {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.04);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .nav-ig:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* ── MODE SWITCHER — floating bottom-center dock ── */
+  .mode-toggle {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 22px;
+    padding: 10px;
+    cursor: default;
+    user-select: none;
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    z-index: 100;
+    box-shadow:
+      0 4px 12px -2px rgba(0, 0, 0, 0.08),
+      0 20px 48px -12px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: bottom 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  }
+  .mode-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px 26px;
+    border-radius: 14px;
+    border: 2.5px solid transparent;
+    background: transparent;
+    color: #6b7a7c;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 130px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mode-option .mode-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+  }
+  .mode-option .mode-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 2;
+  }
+  .mode-option .mode-label-text {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
+  }
+  .mode-option:hover:not(.active) {
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.03);
+  }
+  .mode-option:hover:not(.active) .mode-icon {
+    transform: translateY(-2px);
+  }
+
+  /* Active state — green for lawn, teal for snow */
+  .mode-option.active {
+    background: #fff;
+    color: var(--accent-dark);
+    border-color: var(--accent-light);
+    box-shadow:
+      0 0 0 5px var(--accent-bg),
+      0 6px 18px -4px rgba(63, 175, 90, 0.45);
+  }
+  [data-mode="snow"] .mode-option.active {
+    box-shadow:
+      0 0 0 5px var(--accent-bg),
+      0 6px 18px -4px rgba(47, 159, 165, 0.5);
+  }
+  .mode-option.active .mode-icon {
+    transform: scale(1.18) translateY(-1px);
+    color: var(--accent);
+  }
+  .mode-option.active .mode-label-text {
+    color: var(--text);
+  }
+
+  /* "MODE" pill tag floating on top */
+  .mode-toggle::before {
+    content: 'SELECT MODE';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--accent-dark);
+    background: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--accent-light);
+    white-space: nowrap;
+    transition: color var(--transition), border-color var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .btn-nav {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    background: #111;
+  }
+  .hero video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+  .hero video.fade-out {
+    opacity: 0;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.15) 100%);
+    z-index: 1;
+  }
+  .hero-inner,
+  .hero-scroll {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-inner {
+    max-width: 720px;
+    padding: 120px 5% 80px;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.12;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent-light);
+    transition: color var(--transition);
+    display: inline-block;
+    /* Reserve width of the widest variant so the line doesn't visually jump
+       when swapping between "Lawn & Property" and "Snow & Winter" */
+    min-width: 15ch;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    max-width: 560px;
+  }
+  .hero-body {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+
+  /* ── PREMIUM BENEFIT BANNER — highlighted ── */
+  .hero-benefit {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 24px 14px 16px;
+    margin-bottom: 36px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(165, 214, 167, 0.35), rgba(63, 175, 90, 0.18));
+    border: 1.5px solid rgba(165, 214, 167, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 0 0 6px rgba(165, 214, 167, 0.08),
+      0 12px 40px -8px rgba(63, 175, 90, 0.45);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 100%;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: benefitFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
+               benefitPulse 3s ease-in-out 1.3s infinite;
+    transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+  }
+  [data-mode="snow"] .hero-benefit {
+    background: linear-gradient(135deg, rgba(167, 216, 222, 0.38), rgba(47, 159, 165, 0.22));
+    border-color: rgba(167, 216, 222, 0.6);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 0 0 6px rgba(167, 216, 222, 0.1),
+      0 12px 40px -8px rgba(47, 159, 165, 0.5);
+  }
+  .hero-benefit-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #A5D6A7, #3FAF5A);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(63, 175, 90, 0.45), 0 0 0 3px rgba(255,255,255,0.1);
+    transition: background 0.6s ease, box-shadow 0.6s ease, opacity 0.3s ease;
+  }
+  [data-mode="snow"] .hero-benefit-icon {
+    background: linear-gradient(135deg, #A7D8DE, #2F9FA5);
+    box-shadow: 0 2px 10px rgba(47, 159, 165, 0.5), 0 0 0 3px rgba(255,255,255,0.1);
+  }
+  .hero-benefit-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #1A2B2D;
+    background: #fff;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-right: 8px;
+    transition: color 0.4s ease;
+  }
+  .hero-benefit-text {
+    color: #fff;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+  .hero-benefit.swapping .hero-benefit-text,
+  .hero-benefit.swapping .hero-benefit-icon {
+    opacity: 0;
+  }
+  @keyframes benefitFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes benefitPulse {
+    0%, 100% {
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 8px 32px -8px rgba(63, 175, 90, 0.25);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 12px 40px -8px rgba(63, 175, 90, 0.4);
+    }
+  }
+  @keyframes benefitPulseSnow {
+    0%, 100% {
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 8px 32px -8px rgba(47, 159, 165, 0.28);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 12px 40px -8px rgba(47, 159, 165, 0.45);
+    }
+  }
+  [data-mode="snow"] .hero-benefit {
+    animation: benefitFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
+               benefitPulseSnow 4s ease-in-out 1.3s infinite;
+  }
+  @media (max-width: 600px) {
+    .hero-benefit {
+      font-size: 0.8rem;
+      padding: 10px 16px 10px 12px;
+      gap: 10px;
+    }
+    .hero-benefit-icon { width: 26px; height: 26px; font-size: 0.85rem; }
+    .hero-benefit-tag { display: none; }
+  }
+
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--cta-gradient);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.3); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 10px;
+    padding: 15px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 5%;
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 96px 5%; }
+  .section-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: color var(--transition);
+    margin-bottom: 12px;
+    display: block;
+  }
+  h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  /* ── URGENCY STRIP ── */
+  .urgency-strip {
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background var(--transition);
+  }
+  .urgency-strip span { opacity: 0.7; margin: 0 12px; }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--page-bg);
+    transition: background var(--transition);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 72px;
+    align-items: center;
+    max-width: 1160px;
+    margin: 32px auto 0;
+  }
+  .about-img-wrap {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 5/4;
+    box-shadow: 0 24px 60px -20px rgba(26, 43, 45, 0.25), 0 0 0 1px rgba(0,0,0,0.03);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+  }
+  .about-img-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(26,43,45,0.15) 100%);
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .about-img-wrap:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 32px 72px -20px rgba(26, 43, 45, 0.32), 0 0 0 1px rgba(0,0,0,0.03);
+  }
+  .about-img-wrap video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .about-img-wrap:hover video { transform: scale(1.05); }
+
+  /* Floating trust marker on image */
+  .about-marker {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .about-marker-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-bg);
+    flex-shrink: 0;
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+  .about-marker-text {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .about-marker-sub {
+    font-size: 0.72rem;
+    color: #6b7a7c;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .about-content h2 {
+    margin-bottom: 20px;
+  }
+  .about-content p {
+    color: #4a5a5c;
+    line-height: 1.75;
+    font-size: 1.02rem;
+    margin-bottom: 18px;
+    max-width: 520px;
+  }
+  .about-content p:last-of-type {
+    margin-bottom: 28px;
+  }
+
+  /* Feature badges — premium SaaS style */
+  .about-pills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 28px;
+    max-width: 480px;
+  }
+  .pill {
+    background: var(--surface);
+    color: var(--text);
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(26,43,45,0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background var(--transition);
+  }
+  .pill::before {
+    content: '';
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--accent-bg);
+    background-image: radial-gradient(circle, var(--accent) 4px, transparent 5px);
+    flex-shrink: 0;
+    transition: background var(--transition);
+  }
+  .pill:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-light);
+    box-shadow: 0 8px 20px rgba(26,43,45,0.08);
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { gap: 40px; }
+    .about-pills { grid-template-columns: 1fr; max-width: 100%; }
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--accent-bg);
+    transition: background var(--transition);
+  }
+  .services-header {
+    display: flex; justify-content: center; align-items: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap; gap: 20px;
+    text-align: center;
+  }
+  .services-header > div {
+    min-width: 240px;
+  }
+  .mode-indicator {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--accent-bg);
+    color: var(--accent-dark);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background var(--transition), color var(--transition);
+    min-width: 200px;
+  }
+  .services-grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 28px 24px;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease, background var(--transition);
+    transform-origin: left;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); border-color: transparent; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .service-card h3 { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .service-card p { font-size: 0.85rem; color: #666; line-height: 1.6; }
+
+  .services-note {
+    margin: 40px auto 0;
+    max-width: 1200px;
+    background: var(--surface);
+    border: 1px solid rgba(0,0,0,0.05);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 18px 24px;
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 500;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition);
+  }
+  .services-note::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-bg);
+    flex-shrink: 0;
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+
+  /* ── PLANS ── */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 28px;
+    max-width: 980px;
+    margin: 48px auto 0;
+    align-items: stretch;
+  }
+  @media (max-width: 960px) {
+    .plans-grid { grid-template-columns: 1fr; max-width: 460px; }
+  }
+  .plan-card {
+    background: var(--surface);
+    border: 1.5px solid rgba(0,0,0,0.06);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: var(--card-shadow);
+  }
+  .plan-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
+  .plan-card.featured {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    transform: scale(1.03);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    transition: background var(--transition), border-color var(--transition), transform 0.25s, box-shadow 0.25s;
+  }
+  .plan-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+  .plan-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: #FFD600;
+    color: #333;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 4px 12px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .plan-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: inherit;
+  }
+  .plan-desc { font-size: 0.88rem; opacity: 0.7; margin-bottom: 28px; line-height: 1.6; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .plan-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .plan-features li::before {
+    content: '✓';
+    width: 20px; height: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: inherit;
+  }
+  .plan-card:not(.featured) .plan-features li::before {
+    background: var(--accent-bg);
+    color: var(--accent);
+    transition: background var(--transition), color var(--transition);
+  }
+  .plan-cta {
+    display: block;
+    margin-top: 32px;
+    text-align: center;
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .plan-card.featured .plan-cta {
+    background: #fff;
+    color: var(--accent);
+    transition: color var(--transition);
+  }
+  .plan-card:not(.featured) .plan-cta {
+    background: var(--accent);
+    color: #fff;
+    transition: background var(--transition);
+  }
+  .plan-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+  .plan-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    line-height: 1;
+  }
+  .plan-subhead {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin: 22px 0 10px;
+  }
+  .plan-card:not(.featured) .plan-subhead { color: var(--accent-dark); opacity: 1; }
+  .plan-features li:first-child-of-subgroup { margin-top: 6px; }
+  .plan-bonus {
+    background: var(--accent-bg);
+    color: var(--accent-dark);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background var(--transition), color var(--transition);
+  }
+  .plan-card.featured .plan-bonus {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+  }
+  .plan-tagline {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .plan-card.featured .plan-tagline { border-top-color: rgba(255,255,255,0.18); }
+
+  /* ── WHY US ── */
+  #why {
+    background: var(--surface);
+    transition: background var(--transition);
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .why-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: var(--card-shadow);
+  }
+  .why-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
+  .why-icon {
+    width: 56px; height: 56px;
+    background: var(--accent-bg);
+    color: var(--accent-dark);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 16px;
+    transition: background var(--transition), color var(--transition);
+  }
+  .why-card h3 { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .why-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+
+  /* ── SERVICE AREA ── */
+  .area-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .area-map {
+    background: #e8e8e8;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+  .area-map iframe {
+    width: 100%; height: 100%;
+    border: 0;
+    filter: grayscale(20%);
+  }
+  .area-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+  .area-list li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.95rem; color: #444;
+  }
+  .area-list li::before {
+    content: '📍';
+    font-size: 1rem;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: #1a1a1a; color: #fff; }
+  #contact .section-tag { color: var(--accent-light); }
+  #contact h2 { color: #fff; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 48px;
+    align-items: start;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 24px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .contact-item-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .contact-item-text { }
+  .contact-item-label { font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-item-val { font-size: 1rem; font-weight: 500; color: #fff; }
+  .contact-item-val a { color: var(--accent-light); text-decoration: none; transition: color var(--transition); }
+  .contact-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 36px;
+  }
+  .contact-form h3 { font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 24px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group select option { background: #222; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent-light); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%;
+    background: var(--cta-gradient);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background var(--transition);
+    margin-top: 8px;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 40px 5% 130px;
+    font-size: 0.82rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer strong { color: rgba(255,255,255,0.7); }
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .footer-social a {
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .footer-social a:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  .footer-ig-handle {
+    display: block;
+    color: rgba(255,255,255,0.55);
+    font-weight: 500;
+    margin-bottom: 18px;
+    font-size: 0.85rem;
+  }
+  .footer-ig-handle a { color: inherit; text-decoration: none; }
+  .footer-ig-handle a:hover { color: #fff; }
+
+  /* ── FADE IN ANIMATION ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE NAV ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: #333;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-center { display: none; }
+    .hamburger { display: flex; }
+    .about-grid, .contact-grid, .area-inner { grid-template-columns: 1fr; gap: 40px; }
+    .plans-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .plan-card.featured { transform: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 5%; }
+    .hero-inner { padding: 100px 5% 60px; }
+    .hero-ctas { flex-direction: column; }
+    .btn-primary, .btn-secondary { text-align: center; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .contact-form { padding: 24px 20px; }
+    .mode-toggle {
+      bottom: 16px;
+      padding: 8px;
+      gap: 6px;
+      border-radius: 18px;
+    }
+    .mode-option {
+      padding: 10px 18px;
+      min-width: 100px;
+      gap: 4px;
+    }
+    .mode-option .mode-icon { width: 26px; height: 26px; }
+    .mode-option .mode-label-text { font-size: 0.74rem; }
+    .mode-toggle::before {
+      font-size: 0.55rem;
+      padding: 3px 10px;
+      top: -10px;
+    }
+    .nav-ig { width: 32px; height: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- URGENCY STRIP -->
+<div class="urgency-strip" id="urgencyStrip">
+  <span>⚡</span> Limited seasonal contracts available. <strong>First come, first served</strong> <span>·</span> Book early for priority scheduling
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="index.html">Lakecity<br><span>Lawns & Snow</span></a>
+
+  <div class="nav-right">
+    <div class="nav-center">
+      <a href="#about">About</a>
+      <a href="services.html">Services</a>
+      <a href="plans.html">Plans</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a class="nav-ig" href="https://instagram.com/lakecity.inc" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+      </svg>
+    </a>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <video id="heroVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="grass.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="hero-inner">
+    <h1>
+      Sault Ste. Marie's<br>
+      <em id="heroAccent">Lawn & Property</em><br>
+      Maintenance Pros
+    </h1>
+    <p class="hero-sub">Professional, affordable, and year-round property maintenance services you can trust.</p>
+    <p class="hero-body">At Lakecity Lawns & Snow, we provide high-quality lawn care in summer and dependable snow removal in winter across Sault Ste. Marie. Whether you need one-time service or a full seasonal plan, we've got you covered.</p>
+
+    <div class="hero-benefit" id="heroBenefit" role="status" aria-live="polite">
+      <div class="hero-benefit-icon" id="heroBenefitIcon">🪟</div>
+      <div>
+        <span class="hero-benefit-tag">✨ FREE</span>
+        <span class="hero-benefit-text" id="heroBenefitText">Complimentary Window Cleaning with seasonal plans</span>
+      </div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn-primary">Get a Free Quote →</a>
+      <a href="services.html" class="btn-secondary">View Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL TO EXPLORE
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid fade-up">
+    <div class="about-img-wrap">
+      <video id="aboutVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+        <source src="grasscut.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="about-marker">
+        <div class="about-marker-dot"></div>
+        <div>
+          <div class="about-marker-text">Locally Based in Sault Ste. Marie</div>
+          <div class="about-marker-sub">Built for Northern Ontario conditions</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-content">
+      <span class="section-tag">About Us</span>
+      <h2>Dependable property care,<br>done the right way.</h2>
+      <p>Lakecity Lawns and Snow is a locally operated property maintenance service. We help homeowners across Sault Ste. Marie keep their yards sharp, safe, and well cared for in every season.</p>
+      <p>We bring professional equipment, clear communication, and a straightforward approach to every job. No shortcuts, no guesswork. Just reliable service you can plan around.</p>
+      <div class="about-pills">
+        <div class="pill">Fully Insured</div>
+        <div class="pill">Locally Owned</div>
+        <div class="pill">Professional Equipment</div>
+        <div class="pill">Free Estimates</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header fade-up">
+    <div>
+      <span class="section-tag">What We Do</span>
+      <h2>Our Services</h2>
+    </div>
+    <div class="mode-indicator" id="modeIndicator">🌿 Lawn Care Mode</div>
+  </div>
+
+  <div class="services-grid" id="servicesGrid">
+    <!-- Populated by JS -->
+  </div>
+  <div class="services-note" id="servicesNote">
+    📅 Book before May 30 and get special seasonal discounts on all lawn care packages.
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="plans">
+  <div class="fade-up" style="text-align:center;">
+    <span class="section-tag">Pricing</span>
+    <h2>Plans &amp; Packages</h2>
+    <p class="section-lead" style="margin: 0 auto;">Flexible coverage options designed for every homeowner in Sault Ste. Marie.</p>
+  </div>
+
+  <div class="plans-grid fade-up">
+    <!-- Seasonal Pass — swaps between Summer/Winter based on toggle -->
+    <div class="plan-card" id="seasonalCard">
+      <div class="plan-icon" id="seasonalIcon">🌿</div>
+      <div class="plan-name" id="seasonalName">Seasonal Pass (Summer)</div>
+      <div class="plan-desc" id="seasonalDesc">Full coverage for one season with priority scheduling.</div>
+      <ul class="plan-features" id="seasonalFeatures">
+        <!-- Populated by JS -->
+      </ul>
+      <div class="plan-bonus" id="seasonalBonus" style="display:none;">
+        <span>🎁</span><span id="seasonalBonusText"></span>
+      </div>
+      <div class="plan-tagline" id="seasonalTagline">Clean, consistent lawn care all season.</div>
+      <a href="contact.html" class="plan-cta">Get Started</a>
+    </div>
+
+    <!-- Annual Pass — always featured, unchanged by toggle -->
+    <div class="plan-card featured">
+      <div class="plan-badge">⭐ BEST VALUE</div>
+      <div class="plan-icon">⭐</div>
+      <div class="plan-name">Annual Pass</div>
+      <div class="plan-desc">Year-round care. Zero hassle.</div>
+
+      <div class="plan-subhead">Summer Coverage</div>
+      <ul class="plan-features">
+        <li>Weekly / Bi-weekly lawn care</li>
+        <li>Mulching &amp; aeration</li>
+        <li>Leaf removal &amp; gutter cleaning</li>
+        <li>Complimentary window cleaning</li>
+      </ul>
+
+      <div class="plan-subhead">Winter Coverage</div>
+      <ul class="plan-features">
+        <li>Full season snow removal</li>
+        <li>Walkway &amp; vehicle clearing</li>
+        <li>Complimentary salting</li>
+        <li>Guaranteed service at 5 cm snowfall</li>
+      </ul>
+
+      <div class="plan-subhead">Year-Round Perks</div>
+      <ul class="plan-features">
+        <li>Priority service all year</li>
+        <li>Best pricing available</li>
+        <li>Dedicated account support</li>
+      </ul>
+
+      <div class="plan-tagline">One plan. All seasons. Priority guaranteed.</div>
+      <a href="contact.html" class="plan-cta">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="fade-up" style="text-align:center; max-width:600px; margin:0 auto;">
+    <span class="section-tag">Why Choose Us</span>
+    <h2>What Sets Us Apart</h2>
+  </div>
+  <div class="why-grid fade-up">
+    <div class="why-card">
+      <div class="why-icon">⏱️</div>
+      <h3>Reliable & On-Time</h3>
+      <p>We show up when we say we will. No guesswork, no delays.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <h3>Affordable Pricing</h3>
+      <p>Competitive, transparent rates with no hidden fees or surprises.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔧</div>
+      <h3>Pro Equipment</h3>
+      <p>We use professional-grade tools to deliver a clean, sharp finish every time.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🗺️</div>
+      <h3>Local Experience</h3>
+      <p>We know Sault Ste. Marie's weather and tailor our work to local conditions.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">⭐</div>
+      <h3>Customer Focused</h3>
+      <p>Your satisfaction is our priority. We go the extra mile on every job.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREA -->
+<section id="area">
+  <div class="area-inner fade-up">
+    <div>
+      <span class="section-tag">Coverage</span>
+      <h2>Our Service Area</h2>
+      <p class="section-lead">Based in Sault Ste. Marie, we proudly serve the surrounding communities.</p>
+      <ul class="area-list">
+        <li>Sault Ste. Marie (all areas)</li>
+        <li>Korah & West End</li>
+        <li>Searchmont</li>
+        <li>Echo Bay</li>
+        <li>Surrounding municipalities</li>
+      </ul>
+      <a href="contact.html" class="btn-primary" style="margin-top:28px; display:inline-block;">Check My Area →</a>
+    </div>
+    <div class="area-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d88989.5406432219!2d-84.44539375!3d46.5136054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4d3651e00b61c16b%3A0xd8e3d55e8aabc4e2!2sSault%20Ste.%20Marie%2C%20ON%2C%20Canada!5e0!3m2!1sen!2sca!4v1716000000000"
+        allowfullscreen loading="lazy"
+        title="Sault Ste. Marie map">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-up" style="max-width:600px;">
+    <span class="section-tag">Get In Touch</span>
+    <h2>Get Your Free Quote Today</h2>
+    <p class="section-lead" style="color:rgba(255,255,255,0.6);">Ready to get started? Reach out and we'll get back to you with a no-obligation estimate.</p>
+  </div>
+
+  <div class="contact-grid fade-up">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text">
+          <div class="contact-item-label">Call or Text</div>
+          <div class="contact-item-val"><a href="tel:+17059715285">(705) 971-5285</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-text">
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-val"><a href="mailto:info@lakecityco.ca">info@lakecityco.ca</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text">
+          <div class="contact-item-label">Location</div>
+          <div class="contact-item-val">Sault Ste. Marie, Ontario, Canada</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div class="contact-item-text">
+          <div class="contact-item-label">Hours</div>
+          <div class="contact-item-val">Mon–Sat: 7am–7pm<br>Sunday: By request</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px;">
+        <p style="font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.7;">
+          ⚡ <strong style="color:rgba(255,255,255,0.8);">Limited slots available</strong> for this season's contracts. We operate on a first-come, first-served basis, so secure your spot early.
+        </p>
+      </div>
+    </div>
+
+    <form class="contact-form" id="quoteForm">
+      <h3>Request a Free Quote</h3>
+
+      <!-- Web3Forms config — paste your access key below -->
+      <input type="hidden" name="access_key" value="f526a22f-7894-48c7-8a79-d3392009fb4a">
+      <input type="hidden" name="subject" value="New Quote Request from Lakecity Lawns & Snow website">
+      <input type="hidden" name="from_name" value="Lakecity Lawns Website">
+      <!-- Honeypot field to block spam bots -->
+      <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
+      <div class="form-group">
+        <label for="nameField">Your Name</label>
+        <input id="nameField" name="name" type="text" placeholder="John Smith" required>
+      </div>
+      <div class="form-group">
+        <label for="phoneField">Phone Number</label>
+        <input id="phoneField" name="phone" type="tel" placeholder="(705) 000-0000" required>
+      </div>
+      <div class="form-group">
+        <label for="emailField">Email Address</label>
+        <input id="emailField" name="email" type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="serviceField">Service Needed</label>
+        <select id="serviceField" name="service">
+          <option>Lawn Care (One-Time)</option>
+          <option>Weekly Lawn Maintenance</option>
+          <option>Seasonal Lawn Package</option>
+          <option>Snow Removal (One-Time)</option>
+          <option>Seasonal Snow Removal</option>
+          <option>Annual Pass (Lawn and Snow)</option>
+          <option>Other / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="messageField">Message (optional)</label>
+        <textarea id="messageField" name="message" placeholder="Tell us about your property or any specific needs..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send My Quote Request →</button>
+
+      <p id="formStatus" style="margin-top: 14px; font-size: 0.85rem; color: rgba(255,255,255,0.6); min-height: 20px;"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-social">
+    <a href="https://instagram.com/lakecity.inc" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+      </svg>
+    </a>
+  </div>
+  <div class="footer-ig-handle">
+    Follow us: <a href="https://instagram.com/lakecity.inc" target="_blank" rel="noopener">@lakecity.inc</a>
+  </div>
+  <p>&copy; 2025 <strong>Lakecity Lawns & Snow</strong> · Sault Ste. Marie, Ontario · All rights reserved.</p>
+  <p style="margin-top:8px;">Serving our community with pride. Year-round property maintenance you can count on.</p>
+</footer>
+
+<script>
+  // ── DATA ──
+  const content = {
+    lawn: {
+      heroAccent: 'Lawn & Property',
+      modeIndicator: '🌿 Lawn Care Mode',
+      aboutImg: '../Desktop/Lakecity/image/grass.jpg',
+      aboutVideoSrc: 'grasscut.mp4',
+      services: [
+        { icon: '✂️', title: 'One-Time Lawn Cutting', desc: 'Fresh cut for your yard, no commitment required.' },
+        { icon: '📅', title: 'Weekly & Bi-Weekly Maintenance', desc: 'Scheduled mowing to keep your lawn picture-perfect.' },
+        { icon: '🌱', title: 'Seasonal Lawn Care Packages', desc: 'Full-season plans tailored to your property.' },
+        { icon: '🍂', title: 'Leaf Removal', desc: 'Fall cleanup. Leaves cleared and hauled away.' },
+        { icon: '🏠', title: 'Gutter Cleaning', desc: 'Clogged gutters cleared to protect your home.' },
+      ],
+      note: '📅 Book before May 30 and get special seasonal discounts on all lawn care packages.',
+      benefit: {
+        icon: '🪟',
+        text: 'Complimentary Window Cleaning with seasonal plans'
+      },
+      plan: {
+        icon: '🌿',
+        name: 'Seasonal Pass (Summer)',
+        desc: 'Full coverage for one season with priority scheduling.',
+        features: [
+          'Weekly / Bi-weekly lawn maintenance',
+          'On-demand lawn service',
+          'Mulching & core aeration',
+          'Leaf removal',
+          'Fall gutter cleaning',
+          'Free site assessment'
+        ],
+        bonus: 'Complimentary window cleaning',
+        tagline: 'Clean, consistent lawn care all season.'
+      }
+    },
+    snow: {
+      heroAccent: 'Snow & Winter',
+      modeIndicator: '❄️ Snow Removal Mode',
+      aboutImg: '../Desktop/Lakecity/image/snow.jpg',
+      aboutVideoSrc: 'window.mp4',
+      services: [
+        { icon: '🚜', title: 'One-Time Snow Removal', desc: 'Single-visit clearing for driveways and walkways.' },
+        { icon: '📦', title: 'Seasonal Snow Packages', desc: 'Full winter coverage. We handle every snowfall.' },
+        { icon: '🛤️', title: 'Driveway & Walkway Clearing', desc: 'Safe, clear paths for your home and family.' },
+        { icon: '🧂', title: 'Snow Control & Salting', desc: 'Included with every service. No icy surfaces.' },
+        { icon: '🎁', title: 'Free Salting for Seasonal Customers', desc: 'Salt treatment is on us for seasonal contract holders.' },
+      ],
+      note: '❄️ Seasonal contracts fill up fast. Book your winter snow removal plan before the first snowfall.',
+      benefit: {
+        icon: '❄️',
+        text: 'Complimentary Salting included with winter plans'
+      },
+      plan: {
+        icon: '❄️',
+        name: 'Winter Pass',
+        desc: 'Stay clear. Stay comfortable.',
+        features: [
+          'Full season snow removal',
+          'Walkway clearing',
+          'Vehicle snow clearing',
+          'Complimentary salting',
+          'Service starts at 5 cm snowfall',
+          'Live tracking & service updates',
+          'Driveway markers included',
+          'Flexible payment options'
+        ],
+        bonus: null,
+        tagline: 'Reliable winter protection without the stress.'
+      }
+    }
+  };
+
+  let currentMode = 'lawn';
+  try {
+    const stored = sessionStorage.getItem('lakecityMode');
+    if (stored === 'snow' || stored === 'lawn') currentMode = stored;
+  } catch (e) {}
+  const heroVideo = document.getElementById('heroVideo');
+  const heroVideoSources = {
+    lawn: 'grass.mp4',
+    snow: 'snow.mp4'
+  };
+
+  function renderServices(mode) {
+    const grid = document.getElementById('servicesGrid');
+    const d = content[mode];
+    grid.innerHTML = d.services.map(s => `
+      <div class="service-card">
+        <div class="service-icon">${s.icon}</div>
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+      </div>
+    `).join('');
+  }
+
+  function renderSeasonalPlan(mode) {
+    const p = content[mode].plan;
+    document.getElementById('seasonalIcon').textContent = p.icon;
+    document.getElementById('seasonalName').textContent = p.name;
+    document.getElementById('seasonalDesc').textContent = p.desc;
+    document.getElementById('seasonalFeatures').innerHTML =
+      p.features.map(f => `<li>${f}</li>`).join('');
+    const bonusEl = document.getElementById('seasonalBonus');
+    if (p.bonus) {
+      bonusEl.style.display = 'flex';
+      document.getElementById('seasonalBonusText').textContent = 'Bonus: ' + p.bonus;
+    } else {
+      bonusEl.style.display = 'none';
+    }
+    document.getElementById('seasonalTagline').textContent = p.tagline;
+  }
+
+  function switchMode(mode) {
+    if (mode === currentMode) return;
+    currentMode = mode;
+    const d = content[mode];
+    document.documentElement.setAttribute('data-mode', mode);
+    try { sessionStorage.setItem('lakecityMode', mode); } catch (e) {}
+
+    // Update toggle UI — activate clicked option
+    document.querySelectorAll('.mode-option').forEach(btn => {
+      const isActive = btn.dataset.mode === mode;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    // Update dynamic text
+    document.getElementById('heroAccent').textContent = d.heroAccent;
+    document.getElementById('modeIndicator').textContent = d.modeIndicator;
+    const aboutVideo = document.getElementById('aboutVideo');
+    aboutVideo.querySelector('source').src = d.aboutVideoSrc;
+    aboutVideo.load();
+    document.getElementById('servicesNote').textContent = d.note;
+
+    // Swap benefit banner with a soft fade
+    const benefitEl = document.getElementById('heroBenefit');
+    benefitEl.classList.add('swapping');
+    setTimeout(() => {
+      document.getElementById('heroBenefitIcon').textContent = d.benefit.icon;
+      document.getElementById('heroBenefitText').textContent = d.benefit.text;
+      benefitEl.classList.remove('swapping');
+    }, 220);
+    heroVideo.classList.add('fade-out');
+    heroVideo.querySelector('source').src = heroVideoSources[mode];
+    heroVideo.load();
+    heroVideo.addEventListener('loadeddata', function handleLoaded() {
+      heroVideo.classList.remove('fade-out');
+      heroVideo.play().catch(() => {});
+    }, { once: true });
+
+    // Re-render services + seasonal plan
+    renderServices(mode);
+    renderSeasonalPlan(mode);
+  }
+
+  // Per-option click handlers (delegated so it works even if the toggle
+  // is rendered later in the DOM than this script)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.mode-option');
+    if (btn && btn.dataset.mode) {
+      switchMode(btn.dataset.mode);
+    }
+  });
+
+  // Init — apply whatever mode was saved from previous page or default lawn
+  renderServices(currentMode);
+  renderSeasonalPlan(currentMode);
+  if (currentMode === 'snow') {
+    // Force a full switch — defer until DOM ready so the floating toggle buttons exist
+    const runSwitch = () => {
+      currentMode = 'lawn'; // trick switchMode into running its full flow
+      switchMode('snow');
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runSwitch);
+    } else {
+      runSwitch();
+    }
+  }
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Mobile menu (simple scroll to top for now — can be extended)
+  function toggleMenu() {
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Real form submission via Web3Forms
+  const form = document.getElementById('quoteForm');
+  const status = document.getElementById('formStatus');
+  const submitBtn = form.querySelector('.form-submit');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (form.botcheck && form.botcheck.checked) return; // honeypot caught a bot
+
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.textContent = '';
+    status.style.color = 'rgba(255,255,255,0.6)';
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        submitBtn.textContent = '✓ Quote Request Sent!';
+        submitBtn.style.background = 'var(--accent-dark)';
+        status.textContent = 'Thanks! We will get back to you shortly.';
+        status.style.color = 'var(--accent-light)';
+        form.reset();
+
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.style.background = '';
+          submitBtn.disabled = false;
+          status.textContent = '';
+        }, 5000);
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch (err) {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      status.textContent = 'Something went wrong. Please call or email us directly.';
+      status.style.color = '#ff8a80';
+      console.error('Form submission error:', err);
+    }
+  });
+</script>
+
+<!-- ── FLOATING MODE TOGGLE (bottom-center dock) ── -->
+<div class="mode-toggle" id="modeToggle" role="tablist" aria-label="Service mode">
+  <button class="mode-option active" data-mode="lawn" role="tab" aria-selected="true">
+    <span class="mode-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+      </svg>
+    </span>
+    <span class="mode-label-text">Lawn Care</span>
+  </button>
+  <button class="mode-option" data-mode="snow" role="tab" aria-selected="false">
+    <span class="mode-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <path d="m20 16-4-4 4-4"/>
+        <path d="m4 8 4 4-4 4"/>
+        <path d="m16 4-4 4-4-4"/>
+        <path d="m8 20 4-4 4 4"/>
+      </svg>
+    </span>
+    <span class="mode-label-text">Snow Removal</span>
+  </button>
+</div>
+
+</body>
+</html>
