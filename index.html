@@ -1060,33 +1060,163 @@
     .plans-grid { grid-template-columns: 1fr; max-width: 400px; }
     .plan-card.featured { transform: none; }
   }
+  /* ── MOBILE / TABLET — 600px and below ── */
   @media (max-width: 600px) {
-    section { padding: 72px 5%; }
-    .hero-inner { padding: 100px 5% 60px; }
-    .hero-ctas { flex-direction: column; }
-    .btn-primary, .btn-secondary { text-align: center; }
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .why-grid { grid-template-columns: 1fr 1fr; }
-    .contact-form { padding: 24px 20px; }
+    section { padding: 56px 5%; }
+
+    /* HERO — strengthen overlay so text is readable over busy video */
+    .hero::before {
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0.45) 0%,
+        rgba(0,0,0,0.55) 40%,
+        rgba(0,0,0,0.75) 100%
+      );
+    }
+    .hero-inner {
+      padding: 92px 6% 56px;
+      max-width: 100%;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 8.5vw, 2.5rem);
+      line-height: 1.08;
+      margin-bottom: 18px;
+      letter-spacing: -0.025em;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    }
+    .hero h1 em {
+      min-width: 0;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 20px;
+      max-width: 100%;
+      font-weight: 400;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    }
+    .hero-body {
+      display: none;
+    }
+
+    /* Benefit pill — keep visible but tighter */
+    .hero-benefit {
+      font-size: 0.82rem;
+      padding: 10px 16px 10px 12px;
+      gap: 10px;
+      margin-bottom: 22px;
+      max-width: 100%;
+      flex-wrap: nowrap;
+    }
+    .hero-benefit-icon { width: 28px; height: 28px; font-size: 0.95rem; }
+    .hero-benefit-tag { font-size: 0.6rem; padding: 2px 7px; margin-right: 6px; }
+    .hero-benefit-text { font-size: 0.82rem; line-height: 1.4; }
+
+    /* CTAs — full-width stacked, larger touch targets */
+    .hero-ctas {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 100%;
+    }
+    .btn-primary, .btn-secondary {
+      text-align: center;
+      width: 100%;
+      padding: 16px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* GRID SECTIONS — tighter columns */
+    .services-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .service-card { padding: 22px 18px; }
+    .service-card h3 { font-size: 0.95rem; }
+    .service-card p { font-size: 0.8rem; }
+    .why-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .why-card { padding: 24px 18px; }
+    .why-icon { width: 48px; height: 48px; font-size: 1.3rem; margin-bottom: 12px; }
+    .why-card h3 { font-size: 0.9rem; }
+    .why-card p { font-size: 0.78rem; }
+    .contact-form { padding: 26px 22px; border-radius: 14px; }
+    .contact-grid { gap: 32px !important; }
+
+    /* SECTION HEADINGS */
+    h2 { font-size: clamp(1.7rem, 6.5vw, 2.1rem); line-height: 1.15; }
+    .section-tag { font-size: 0.72rem; }
+    .section-lead { font-size: 0.95rem; max-width: 100%; }
+
+    /* ABOUT */
+    .about-img-wrap { aspect-ratio: 4/3; border-radius: 18px; }
+    .about-marker { padding: 12px 14px; bottom: 16px; left: 16px; }
+    .about-marker-text { font-size: 0.78rem; }
+    .about-marker-sub { font-size: 0.68rem; }
+    .about-content h2 { margin-bottom: 14px; }
+    .about-content p { font-size: 0.95rem; line-height: 1.65; }
+    .about-pills { grid-template-columns: 1fr; max-width: 100%; gap: 8px; }
+    .pill { padding: 11px 14px; font-size: 0.85rem; }
+
+    /* PLANS */
+    .plan-card { padding: 28px 22px; border-radius: 18px; }
+    .plan-card.featured { transform: none; }
+
+    /* URGENCY STRIP */
+    .urgency-strip {
+      font-size: 0.68rem;
+      padding: 8px 4%;
+      letter-spacing: 0;
+    }
+    .urgency-strip span { margin: 0 8px; }
+
+    /* NAV */
+    nav { height: 64px; padding: 0 4%; }
+    .nav-logo { font-size: 1.05rem; line-height: 1.15; }
+
+    /* FLOATING TOGGLE */
     .mode-toggle {
-      bottom: 16px;
-      padding: 8px;
-      gap: 6px;
-      border-radius: 18px;
+      bottom: 14px;
+      padding: 6px;
+      gap: 4px;
+      border-radius: 16px;
+      max-width: calc(100% - 24px);
     }
     .mode-option {
-      padding: 10px 18px;
-      min-width: 100px;
-      gap: 4px;
+      padding: 9px 18px;
+      min-width: 96px;
+      gap: 3px;
     }
-    .mode-option .mode-icon { width: 26px; height: 26px; }
-    .mode-option .mode-label-text { font-size: 0.74rem; }
+    .mode-option .mode-icon { width: 22px; height: 22px; }
+    .mode-option .mode-label-text { font-size: 0.72rem; font-weight: 700; }
     .mode-toggle::before {
-      font-size: 0.55rem;
-      padding: 3px 10px;
-      top: -10px;
+      font-size: 0.52rem;
+      padding: 2px 9px;
+      top: -9px;
+      letter-spacing: 0.14em;
     }
-    .nav-ig { width: 32px; height: 32px; }
+    .nav-ig { width: 34px; height: 34px; }
+
+    /* FOOTER */
+    footer { padding: 32px 5% 105px; }
+    footer p { font-size: 0.78rem; line-height: 1.6; }
+    .footer-social a { width: 36px; height: 36px; }
+  }
+
+  /* ── EXTRA SMALL — 380px and below ── */
+  @media (max-width: 380px) {
+    .hero-inner { padding: 88px 5% 50px; }
+    .hero h1 { font-size: 1.85rem; line-height: 1.1; }
+    .hero-sub { font-size: 0.92rem; }
+    .hero-benefit-tag { display: none; }
+    .services-grid, .why-grid { grid-template-columns: 1fr; }
+    .mode-option { padding: 8px 14px; min-width: 86px; }
+    .mode-option .mode-label-text { font-size: 0.68rem; }
   }
 </style>
 </head>
